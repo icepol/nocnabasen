@@ -1,0 +1,74 @@
+@font-face {
+	font-family: urania_czech;
+	src: url('urania_czech_1-4.ttf');
+}
+
+body {
+	/* background: url(img/paper.jpg) repeat; */
+	background: #000;
+	font-family: Tahoma,Verdana,Segoe,sans-serif;
+	font-size: 13px;
+	line-height: 16px;
+	margin: 40px;
+	color: #fff;
+}
+
+h1 {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#vers, #pridat {
+	font-family: Tahoma,Verdana,Segoe,sans-serif;
+	font-size: 11px;
+	line-height: 16px;
+	/* background: url(img/paper.jpg) repeat; */
+	background: #000;
+	color: #fff;
+	border: 2px solid #fff;
+	margin: 0;
+	padding: 2px;
+}
+
+#vers {
+	width: 280px;
+	height: 200px;
+	margin-bottom: 2px;
+}
+
+#pridat {
+	width: 288px;
+}
+
+#pridaj-vers {
+	position: absolute;
+}
+
+#basen {
+	position: absolute;
+	left: 330px;
+	margin: 0 100px 0 40px;
+}
+#basen .jeden_vers {
+	position: relative;
+	margin: 15px 0 0 0;
+	padding: 0 0 15px 0;
+	border-bottom: 1px solid #535353;
+}
+
+#fb {
+	position: absolute;
+	top: 15px;
+	right: -5px;
+}
+
+.tools {
+	position: absolute;
+	right: -80px;
+	top: 0;
+	color: #fff;
+	font-size: 15px;
+}
+.tools a {
+	color: #fff;
+}
