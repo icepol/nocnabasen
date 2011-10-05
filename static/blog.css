@@ -36,13 +36,6 @@ h1 {
 	padding-right: 1px;
 }
 
-#pridaj {
-	width: 285px;
-	float: left;
-	margin: 14px 15px 5px 0;
-	position: relative;
-}
-
 #counter {
 	position: absolute;
 	top: 4px;

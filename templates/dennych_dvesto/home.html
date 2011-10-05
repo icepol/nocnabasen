@@ -57,7 +57,7 @@
 	</div>
 	
 	<div class="blog-list">
-		<div id="pridaj">
+		<div id="pridaj" class="item">
 			<ul id="type">
 				<li class="li-type active" id="li-text"><a href="text" class="type">text</a></li>
 				<li class="li-type" id="li-foto"><a href="foto" class="type">foto</a></li>
@@ -96,7 +96,7 @@
 				</form>
 			</div>
 			<div id="counter"></div>
-			<div class="manifest item">
+			<div class="manifest">
 				<strong>Nočná báseň</strong><br />
 				Od 9.marca beží denná verzia Nočnej básne čiže „denných 200“. Urobili sme čo najviac vylepšení, o ktorých si myslíme, že dajú priestor a pohodlie pre slobodné vyjadrenie názorov, postrehov, myšlienok či pocitov cez text alebo fotky.<br /><br /> 
 				My, autori tohto webu, máme pocit, že popri facebookoch, twitteroch a pokecoch je stále nevyplnený priestor pre ľudí, ktorí chcú a majú čo povedať. Neprinášame nič nové či prevratné, len máme chuť dať priestor ľuďom zmýšľajúcim podobne ako my.<br /><br />
@@ -146,7 +146,7 @@
 									{% endif %}
 								</a>
 							</span>
-							{% if forloop.counter0 <= 25 %}
+							{% if 0 and forloop.counter0 <= 5 %}
 								<iframe src="http://www.facebook.com/plugins/like.php?href=/{{ item.id }}/{{ item.topic|slice:":48"|to_seo }}&amp;layout=button_count&amp;show_faces=true&amp;width=100&amp;action=like&amp;font=veranda&amp;colorscheme=light&amp;height=21&amp;locale=en_US" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px; position: absolute" allowTransparency="true"></iframe>
 							{% endif %}
 						</div>

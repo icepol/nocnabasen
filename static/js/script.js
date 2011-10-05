@@ -1,6 +1,10 @@
 var pridaj_vers_top;
 
 $('document').ready(function(){
+	$('.blog-list').masonry({
+		itemSelector: '.item'
+	});
+
 	if ($("#pridaj-vers").size()) {
 		// scrollovanie formu v nocnej basni
 		pridaj_vers_top = $("#pridaj-vers").offset().top;
