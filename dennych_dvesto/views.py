@@ -17,8 +17,10 @@ def home(request):
     categories = Category.objects.all()
     topics = Topic.objects.filter(enabled = 1).annotate(comment_count = Count('comment')).order_by('-id')[:50]
     if request.user.is_authenticated():
+        # user is logged in
         pass
     else:
+        # user is not logged in
         pass
 
     if request.method == 'POST':
