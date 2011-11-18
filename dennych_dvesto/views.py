@@ -5,8 +5,8 @@ from django.template import Context, RequestContext, loader
 from django.db.models import Count
 from django import forms
 from models import Category, Topic, Comment
-import logging
 
+import logging
 l = logging.getLogger('debug')
 
 class LoginForm(forms.Form):
