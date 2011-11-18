@@ -6,6 +6,7 @@ from django.db.models import Count
 from django import forms
 from models import Category, Topic, Comment
 
+# logger
 import logging
 l = logging.getLogger('debug')
 
