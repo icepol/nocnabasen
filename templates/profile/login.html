@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <header id="header" class="clearfix">
+		<menu class="clearfix">
+			<li><h1><a href="/">nočná báseň</a></h1></li>
+		</menu>
+	</header>
+
+    <div id="main" role="main">
+
+        {% if form.errors %}
+            <p style="color: red;">
+                Nesprávne prihlasovacie meno alebo heslo.
+            </p>
+        {% endif %}
+
+        <form class="standard-form" id="profile_form" action="{% url 'django.contrib.auth.views.login' %}" method="post">{% csrf_token %}
+            <label for="id_username">email</label>
+            <input class="input" id="id_username" maxlength="254" name="username" type="email" placeholder="email" required /><br />
+            {{ form.username.errors }}
+
+            <label for="id_password">heslo</label>
+            <input class="input" id="id_password" maxlength="4096" name="password" type="password" placeholder="heslo" required /><br />
+            {{ form.password.errors }}
+
+            <input class="button" type="submit" value="login" />
+            <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}/{% endif %}" />
+        </form>
+    </div>
+{% endblock %}

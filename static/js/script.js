@@ -1,10 +1,14 @@
 var pridaj_vers_top;
 
-$('document').ready(function(){
-	$('.blog-list').masonry({
-		itemSelector: '.item'
+$(window).load(function(){
+	$('#main').masonry({
+		itemSelector: '.box',
+		columnWidth: 300,
+		isAnimated: true
 	});
+});
 
+$('document').ready(function(){
 	if ($("#pridaj-vers").size()) {
 		// scrollovanie formu v nocnej basni
 		pridaj_vers_top = $("#pridaj-vers").offset().top;
@@ -30,13 +34,13 @@ $('document').ready(function(){
 		$(".type").click(function(){
 			// zmena typu pridavaneho contentu
 			var form_name = '#pridaj-' + $(this).attr('href');
-			if ($(form_name).css('display') == 'none') {			
+			if ($(form_name).css('display') == 'none') {
 				$("#pridaj-text").css('display', 'none');
 				$("#pridaj-foto").css('display', 'none');
 				$(form_name).css('display', 'block');
 				
-				$(".type").parent().removeClass('active');
-				$(this).parent().addClass('active');
+				$(".type").removeClass('active');
+				$(this).addClass('active');
 			}
 			
 			return false;
@@ -106,35 +110,15 @@ $('document').ready(function(){
 				$(this).removeClass('alert');
 			}
 		});
-		
-		$("#comments").css('display', 'none');
-		$(".comment").click(function(event) {
-			var href = $(this).attr('href') + '?ajax';
-			$.ajax({
-				url: href,
-				type: "POST", 
-				success: function(data) {
-					show_comments(data, href);
-				}
-			});
-			
-			return false;
-		});
-		
-		if (comments) {
-			// ak su poslane aj commenty, tak ich hned zobrazime
-			var href = location.href + '?ajax';
-			show_comments(comments, href);
-		}
-		
+
 		if (input_form) {
 			var form_name = '#pridaj-' + input_form;
-			if ($(form_name).css('display') == 'none') {			
+			if ($(form_name).css('display') == 'none') {
 				$("#pridaj-text").css('display', 'none');
 				$("#pridaj-foto").css('display', 'none');
 				$(form_name).css('display', 'block');
 				
-				$(".li-type").removeClass('active');
+				$(".type").removeClass('active');
 				$('#li-' + input_form).addClass('active');
 			}
 		}
@@ -150,11 +134,35 @@ $('document').ready(function(){
 			
 			return false;
 		});
-		
-		author_filter();
-		
-		set_delete_event();
 	}
+		
+	$("#comments").css('display', 'none');
+	$(".comment").click(function(event) {
+		var href = $(this).attr('href');
+		$.ajax({
+			url: href,
+			type: "GET",
+			success: function(data) {
+				show_comments(data, href);
+			}
+		});
+		
+		return false;
+	});
+	
+	if (comments) {
+		// ak su poslane aj commenty, tak ich hned zobrazime
+		var href = location.href;
+		show_comments(comments, href);
+	}
+
+	$(".foto").click(function(){
+		return show_foto(this);
+	});
+		
+	author_filter();
+	
+	set_delete_event();
 });
 
 function set_delete_event() {
@@ -260,8 +268,11 @@ function add_comment(event, href) {
 	$('.pridat').attr('disabled', 1);
 	$.ajax({
 		url: href,
-		type: "POST", 
-		data: 'comment=' + $("#comment").val(),
+		type: "POST",
+		data: {
+            comment: $("#comment").val(),
+            csrfmiddlewaretoken: $.cookie('csrftoken')
+        },
 		success: function(data) {
 			$("#comments").html(data);
 			
@@ -275,7 +286,7 @@ function add_comment(event, href) {
 				add_comment(event, href);
 			});
 			
-			$('.pridat').attr('disabled', 0);
+			$('.pridat').attr('disabled', false);
 		}
 	});
 	
@@ -356,4 +367,8 @@ function add_essay_photo(t) {
 	});
 	
 	return false;
+}
+
+function home() {
+	window.location = '/';
 }

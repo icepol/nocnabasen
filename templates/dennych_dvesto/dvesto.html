@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% load template_seo_helper %}
+
+{% block head %}
+    {% include "head.html" %}
+
+    <title>Nočná báseň / Denných 200{% if comments %} - {{ topic.id }} / {{ topic.category }}{% endif %}</title>
+
+	<meta name="description" content="{% if comments %}{{ topic.topic|slice:":48" }}{% else %}Nočná báseň / Denných 200{% endif %}" />
+
+	{% if comments and topic %}
+		<meta property="og:title" content="Nočná báseň / Denných 200 - {{ topic.id }} / {{ topic.category }}" />
+		<meta property="og:type" content="website" />
+		{% if topic.type == 'foto' %}<meta property="og:image" content="/foto/{{ topic.id }}.jpg" />{% endif %}
+		<meta property="og:url" content="/{{ topic.id }}/{{ topic.topic|slice:":48"|to_seo }}" />
+		<meta property="og:site_name" content="www.nocnabasen.sk" />
+	{% endif %}
+
+	<script type="text/javascript">
+		var site_root = '';
+	</script>
+{% endblock %}
+
+{% block content %}
+	<header id="header" class="clearfix">
+		<menu class="clearfix">
+			<li><h1><a href="/">nočná báseň</a></h1></li>
+			{% for item in categories %}
+				<li><a style="color:#{{ item.color }}" class="category-filter {% if active_category %}active{% endif %}" href="{{ item.id }}" title="zobraz iba príspevky zo sekcie {{ item.category }}">{{ item.category }}</a></li>
+			{% endfor %}
+			<li><a style="color:#CCC" class="category-filter" href="0" title="zobraz všetky príspevky">všetko</a></li>
+		</menu>
+	</header>
+
+    <div id="main" role="main">
+
+		<div class="box form">
+			{% if not user.is_anonymous %}
+				<header>
+					<p>
+						<strong>5:00 - 22:00</strong> denný blog pre tých, čo majú čo povedať<br />
+						<strong>22:00 - 5:00</strong> nočná anonymná báseň bez konca
+					</p>
+					<h2>pridat:
+						<a href="text" class="type active" id="li-text">text</a>
+						<a href="foto" class="type" id="li-foto">obrázok</a>
+					</h2>
+				</header>
+
+				<form action="{% url 'add_text' %}" method="post" id="pridaj-text">
+					{% csrf_token %}
+                    <input type="hidden" name="topic_type" value="1" />
+					<p>
+						<textarea id="topic" name="topic" cols="25" rows="5"></textarea>
+						<select class="button category" name="category">
+							<option value="">kategória</option>
+                            {% for item in categories %}
+								<option value="{{ item.id }}">{{ item.category }}</option>
+							{% endfor %}
+						</select>&nbsp;
+						<input class="button pridat" type="submit" value="pridaj tému" />
+					</p>
+				</form>
+
+				<form action="{% url 'add_image' %}" method="post" id="pridaj-foto" style="display: none;" enctype="multipart/form-data">
+					{% csrf_token %}
+                    <input type="hidden" name="topic_type" value="1" />
+					<div class="form-input">
+						<input type="hidden" name="MAX_FILE_SIZE" value="5242880" />
+						<input type="file" class="input" id="foto" name="foto" value="vyber fotografiu" /><br />
+						<input type="checkbox" value="1" id="author" /> <label for="author" id="author-label">som autorom tejto fotografie</label><br />
+					</div>
+
+					<select class="button category" name="category">
+						<option value="">kategória</option>
+						{% for item in categories %}
+                            <option value="{{ item.id }}">{{ item.category }}</option>
+                        {% endfor %}
+					</select>&nbsp;
+
+					<input class="button pridat" type="submit" value="pridaj fotografiu" />
+
+					<footer>
+						Zvolená fotografia musí mať formát JPEG.<br />
+						Maximálny rozmer 4000 x 4000px.<br />
+						Maximálna velkosť 5MB.
+					</footer>
+				</form>
+
+				<div id="counter-wrapper"><div id="counter"></div></div>
+			{% else %}
+				<header>
+					<p>
+						<strong>5:00 - 22:00</strong> denný blog pre tých, čo majú čo povedať<br />
+						<strong>22:00 - 5:00</strong> nočná anonymná báseň bez konca
+					</p>
+				</header>
+
+				<b>Pre pridávanie príspevkov sa musíš prihlásiť.</b><br ><br >
+				Ak sa chceš registrovať napíš na nocnabasen@nocnabasen.sk.
+				<div id="pridaj-text"></div>
+			{% endif %}
+		</div>
+
+		{% if topics %}
+            {% for item in topics %}
+                {% if forloop.counter0 == 2 %}
+					<div class="box">
+						<script type="text/javascript">
+                            google_ad_client = "ca-pub-3674818092641539";
+                            google_ad_slot = "1766628514";
+                            google_ad_width = 234;
+                            google_ad_height = 60;
+						</script>
+
+						<script type="text/javascript"
+						    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+						</script>
+					</div>
+				{% endif %}
+
+				<div class="box">
+					<header>
+						<h2 style="color:#{{ item.category.color }};border-color:#{{ item.category.color }}">{{ item.id }} / {{ item.category }}</h2>
+					</header>
+					<p>
+                        {% if item.topic_type == 1 or item.topic_type == 'text' %}
+                            {{ item.topic|force_escape|to_nl|to_url|safe }}
+                        {% endif %}
+                        {% if item.topic_type == 2 or item.topic_type == 'foto' %}
+                            <a href="/media/photo/{{ item.id }}_b.jpg" class="foto" title="zobraz väčšiu fotku">
+                                <img src="/media/photo/{{ item.id }}.jpg" alt="{{ item.id }} / {{ item.category.category }}" title="zobraz väčšiu fotku" />
+                            </a>
+                        {% endif %}
+					</p>
+
+                    {% if item.user %}
+						<div class="author">
+							<a href="{% if not active_author %}{{ item.user.id }}{% endif %}" class="author-filter" style="color:#{{ item.category.color }}" title="{% if not active_author %}zruš filter{% else %}zobraz iba príspevky autora {{ item.user.first_name }}{% endif %}">{{ item.user.first_name }}</a>
+							 (<a href="{{ item.user.link }}" style="color:#{{ item.category.color }}" target="_blank" title="pozri profil">?</a>)
+						</div>
+					{% endif %}
+
+					<footer>
+						<p>{{ item.inserted|date:"n. M Y H:i" }} / <a href="/dvesto/topic/{{ item.id }}/{% if item.topic %}{{ item.topic|slice:":48"|to_seo }}{% else %}{{ item.category.category|to_seo }}{% endif %}/" class="comment" title="zobraz komentáre">
+							{{ item.comment_count }} {% if item.comment_count > 4 or not item.comment_count %}
+                                reakcií
+                            {% else %}
+                                {% if item.comment_count > 1 %}
+                                    reakcie
+                                {% else %}
+                                    reakcia
+                                {% endif %}
+                            {% endif %}
+						</a></p>
+					</footer>
+				</div>
+			{% endfor %}
+		{% endif %}
+
+	</div>
+{% endblock %}
+
+{% block masonry %}
+    <script src="{{ STATIC_URL }}js/plugins.js?v{$smarty.server.SETUP.version}"></script>
+{% endblock %}
+
+{% block footer %}
+<div id="comments" style="display: none;"></div>
+<div id="photo_big" style="display: none;">
+	<a href="#" class="close-thik photo_close"></a>
+	<div class="content">
+	</div>
+</div>
+
+<script type="text/javascript">
+	var input_form = '{$input_form}';
+	var comments = "";
+
+    {% if comments %}
+        comments = '{{ comments|to_js }}';
+    {% endif %}
+</script>
+{% endblock %}

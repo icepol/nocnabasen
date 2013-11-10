@@ -1,0 +1,58 @@
+{% load template_seo_helper %}
+
+<a href="#" class="close-thik close"></a>
+
+<div class="topic">
+	<h2 style="color:#{{ topic.category.color }}">{{ topic.id }} / {{ topic.category.category }}</h2>
+	<p>
+		{% if topic.topic_type == 1 or topic.topic_type == 'text' %}
+			{{ topic.topic|force_escape|to_nl|to_url|safe }}
+        {% endif %}
+		{% if topic.topic_type == 2 or topic.topic_type == 'foto' %}
+            <a href="/media/photo/{{ topic.id }}_b.jpg" class="foto" title="zobraz väčšiu fotku">
+                <img src="/media/photo/{{ topic.id }}.jpg" alt="{{ topic.id }} / {{ topic.category.category }}" title="zobraz väčšiu fotku" />
+            </a>
+		{% endif %}
+	</p>
+	<footer>
+		<p>
+			{% if topic.user %}
+				<span class="author">
+					<a href="{% if not active_author %}{{ topic.user.id }}{% endif %}" class="author-filter" title="{% if not active_author %}zruš filter{% else %}zobraz iba príspevky autora {{ topic.user.first_name }}{% endif %}">{{ topic.user.first_name }}</a>
+				</span>
+			{% endif %}
+			{{ topic.inserted|date:"n. M Y H:i" }}
+		</p>
+	</footer>
+</div>
+
+<div class="content">
+    {% for item in comments %}
+        <div class="comment{% if forloop.counter0 == 0 %} first{% endif %}">
+            <p>
+                {{ item.comment|force_escape|to_nl|to_url|safe }}
+            </p>
+            {% if item.user %}
+                <footer>
+                    <p>
+                        <span class="author">
+                            <a href="{% if not active_author %}{{ item.user.id }}{% endif %}" class="author-filter" title="{% if not active_author %}zruš filter{% else %}zobraz iba príspevky autora {{ item.user.first_name }}{% endif %}">{{ item.user.first_name }}</a>
+                        </span>
+                        {{ item.inserted|date:"n. M Y H:i" }}
+                    </p>
+                </footer>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+	{% if not user.is_anonymous %}
+		<form action="" method="post" id="pridaj-comment">{% csrf_token %}
+			<input type="hidden" id="topic_id" name="topic_id" value="{{ topic.id }}" />
+			<textarea class="input" id="comment" name="comment" type="text" value="" cols="25" rows="5" maxlength="200" /></textarea><br />
+			<input class="button pridat" type="submit" value="pridaj" /><br />
+		</form>
+	{% else %}
+		<b>Pre pridávanie komentárov sa musíš prihlásiť.</b><br ><br >
+		Ak sa chceš registrovať napíš na nocnabasen@nocnabasen.sk.
+	{% endif %}
+</div>

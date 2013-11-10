@@ -1,0 +1,52 @@
+{% load template_seo_helper %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    {% block head %}
+        {% include "head.html" %}
+
+        <title>Nočná báseň / Denných 200</title>
+
+    	<meta name="description" content="Nočná báseň / Denných 200" />
+
+		<meta property="og:title" content="Nočná báseň / Denných 200" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="/" />
+		<meta property="og:site_name" content="www.nocnabasen.sk" />
+    {% endblock %}
+</head>
+
+<body>
+
+{% include "dennych_dvesto/login.html" %}
+
+<div id="container">
+
+	{% block content %}{% endblock %}
+
+	<footer class="bottom">
+		&copy; 2011 - 2013 |
+		<a href="/page/pravidla" class="comment">pravidlá používania</a>
+	</footer>
+
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+{% block masonry %}{% endblock %}
+<script src="{{ STATIC_URL }}js/script.js?v{$smarty.server.SETUP.version}"></script>
+<script src="{{ STATIC_URL }}js/jquery-ui-1.8.17.custom.min.js?v{$smarty.server.SETUP.version}"></script>
+<script src="{{ STATIC_URL }}js/jquery.cookie.js?v{$smarty.server.SETUP.version}"></script>
+<script src="{{ STATIC_URL }}js/jquery.file.js?v{$smarty.server.SETUP.version}"></script>
+
+{% block footer %}{% endblock %}
+
+{% include "stats.html" %}
+
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+    {lang: 'en-GB'}
+</script>
+
+</body>
+</html>

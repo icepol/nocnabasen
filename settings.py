@@ -5,8 +5,10 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Pavel Koci', 'your_email@example.com'),
+    ('Pavel Koci', 'nocnabasen@icepol.net'),
 )
+
+ROOT_PATH = os.path.dirname(os.path.realpath(__file__))
 
 MANAGERS = ADMINS
 
@@ -28,7 +30,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Bratislava'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -98,9 +100,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.csrf.CsrfResponseMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'common.middleware.TimeSwitchMiddleware',
 )
 
 ROOT_URLCONF = 'nocnabasen_sk.urls'
@@ -109,7 +111,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Volumes/data/Users/pol/Development/web/nocnabasen_sk/templates'
+    ROOT_PATH + '/templates'
 )
 
 INSTALLED_APPS = (
@@ -125,7 +127,9 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'dennych_dvesto',
-    'helper'
+    'nocna_basen',
+    'helper',
+    'profile',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -158,3 +162,7 @@ LOGGING = {
         }
     }
 }
+
+SITE_HOME = 'http://www.nocnabasen.sk'
+LOGIN_URL = '/login/'
+#AUTH_USER_MODEL = 'profile.User'

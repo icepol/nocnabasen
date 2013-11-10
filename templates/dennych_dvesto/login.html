@@ -1,0 +1,17 @@
+<div id="login-top">
+	{% if not user.is_anonymous %}
+		<b>{{ user.get_full_name }}</b>&nbsp;
+		<a href="{% url 'profile' %}">profil</a>&nbsp;
+        <a href="{% url 'send_invitation' %}">pozvánky</a>&nbsp;
+		<a href="{% url 'logout' %}?next=/">logout</a>
+	{% else %}
+		<form id="login_form" class="standard-form" action="{% url 'login' %}" method="post">{% csrf_token %}
+			<input class="input" type="email" name="username" id="username" required placeholder="e-mail" />&nbsp;
+			<input class="input" type="password" name="password" id="password" required placeholder="heslo"/>&nbsp;
+
+			<input class="button" type="submit" value="login" />
+
+            <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}/{% endif %}" />
+		</form>
+	{% endif %}
+</div>

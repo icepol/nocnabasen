@@ -1,0 +1,141 @@
+body {
+	/* background: url(img/paper.jpg) repeat; */
+	background: #000;
+	margin: 10px;
+	color: #eee;
+	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 15px;
+    line-height: 1.2;
+    font-weight:300;
+}
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+html, button, input, select, textarea { font-family: sans-serif; color: #222; }
+
+h1 {
+	font-weight: bold;
+	font-size: 20px;
+	padding: 0;
+	margin-bottom: 10px;
+}
+
+#vers, #pridat {
+	font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	line-height: 17px;
+	background: #000;
+	color: #eee;
+	border: 2px solid #eee;
+	margin: 0;
+	padding: 2px;
+	border-radius: 5px;
+}
+
+#vers {
+	width: 280px;
+	height: 200px;
+	margin-bottom: 2px;
+}
+
+#pridat {
+	width: 288px;
+}
+
+#pridaj-vers {
+	position: absolute;
+}
+
+#basen {
+	position: absolute;
+	left: 330px;
+	margin: 0 100px 0 40px;
+}
+#basen .jeden_vers {
+	position: relative;
+	margin: 15px 0 0 0;
+	padding: 0 0 15px 0;
+	border-bottom: 1px solid #535353;
+}
+
+#fb {
+	position: absolute;
+	top: 15px;
+	right: -5px;
+}
+
+.tools {
+	position: absolute;
+	right: -80px;
+	top: 0;
+	color: #fff;
+	font-size: 15px;
+}
+.tools a {
+	color: #fff;
+}
+
+.input {
+	border: 1px solid #ddd;
+}
+
+#email, #password {
+	background-color: #000;
+	color: #eee;
+	border-radius: 5px;
+}
+
+#login-top {
+	text-align: right;
+}
+#login-top a {
+	color: #ddd;
+	text-decoration: underline;
+	margin-left: 5px;
+}
+
+#login {
+	clear: both;
+}
+
+#profile form {
+	margin-top: 10px;
+	padding-top: 10px;
+	border-top: 1px solid #ddd;
+}
+#profile label {
+	width: 110px;
+	text-align: right;
+	display: inline-block;
+}
+#profile a {
+	color: black;
+	text-decoration: underline;
+}
+
+#share {float: left;}
+#share .gp {float:left; padding-right: 5px;}
+#share .fb {float:left; padding-right: 5px;}
+
+#container footer.bottom {
+    display: none;
+}
+
+.input {
+	border-radius: 5px;
+	margin-top: 5px;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.button {
+	border-radius: 5px;
+	margin-top: 5px;
+	background-color: #888;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+	border: 1px solid #888;
+	padding: 0.4em 1em;
+	color: #fff;
+}
+
+button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
+button, input { line-height: normal; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; *overflow: visible; }
+button[disabled], input[disabled] { cursor: default; }

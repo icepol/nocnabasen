@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <header id="header" class="clearfix">
+		<menu class="clearfix">
+			<li><h1><a href="/">nočná báseň</a></h1></li>
+		</menu>
+	</header>
+
+    <div id="main" role="main">
+        {{ message }}
+
+        {% if profile_form.errors %}
+            <p style="color: red;">
+                {{ profile_form.errors|pluralize }}
+            </p>
+        {% endif %}
+
+        <form class="standard-form" id="invitation_form" action="/profile/" method="post">{% csrf_token %}
+            {{ profile_form.email.label_tag }}
+            {{ profile_form.email }}<br />
+            {{ profile_form.email.errors }}
+
+            {{ profile_form.name.label_tag }}
+            {{ profile_form.name }}<br />
+            {{ profile_form.name.errors }}
+
+            <input class="button" class="input" type="submit" value="uprav profil" />
+
+            <input type="hidden" name="action" value="profile" />
+        </form><br />
+
+        {% if password_form.errors %}
+            <p style="color: red;">
+                {{ password_form.errors}}
+            </p>
+        {% endif %}
+
+        <form class="standard-form" id="invitation_form" action="/profile/" method="post">{% csrf_token %}
+            {{ password_form.password.label_tag }}
+            {{ password_form.password }}<br />
+            {{ password_form.password.errors }}
+
+            {{ password_form.password1.label_tag }}
+            {{ password_form.password1 }}<br />
+            {{ password_form.password1.errors }}
+
+            {{ password_form.password2.label_tag }}
+            {{ password_form.password2 }}<br />
+            {{ password_form.password2.errors }}
+
+            <input class="button" class="input" type="submit" value="zmeň heslo" />
+
+            <input type="hidden" name="action" value="password" />
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <header id="header" class="clearfix">
+		<menu class="clearfix">
+			<li><h1><a href="/">nočná báseň</a></h1></li>
+		</menu>
+	</header>
+
+    <div id="main" role="main">
+        {% if show_force_send %}
+            Na túto adresu už bola pozvánka odoslaná. Chceš ju poslať znova?<br /><br />
+        {% endif %}
+
+        {% if registered_user %}
+            Tento užívateľ je už registrovaný.<br /><br />
+        {% endif %}
+
+        {% if form.errors %}
+            <p style="color: red;">
+                {{ form.errors|pluralize }}
+            </p>
+        {% endif %}
+
+        <form class="standard-form" id="invitation_form" action="{% url 'send_invitation' %}" method="post">{% csrf_token %}
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {{ form.email.errors }}<br />
+
+            <input class="button" type="submit" value="pošli pozvánku" />
+
+            {% if show_force_send %}
+                <input type="hidden" name="forced_email" value="{{ forced_email }}">
+            {% endif %}
+        </form><br />
+
+        Odoslané pozvánky:
+    </div>
+{% endblock %}
